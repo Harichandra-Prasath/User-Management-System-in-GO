@@ -1,0 +1,4 @@
+github.com/cespare/reflex@latest
+github.com/joho/godotenv
+gorm.io/gorm
+gorm.io/driver/postgres

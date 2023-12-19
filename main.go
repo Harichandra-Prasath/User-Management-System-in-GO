@@ -1,13 +1,17 @@
 package main
 
 import (
-	routes "github.com/Harichandra-Prasath/User-Management-System-in-GO/Routes"
+	"log"
+
+	"github.com/Harichandra-Prasath/User-Management-System-in-GO/database"
+	routes "github.com/Harichandra-Prasath/User-Management-System-in-GO/routes"
 	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
 	app := fiber.New()
+	database.Connect()
 	routes.SetRoutes(app)
-	app.Listen(":3000")
+	log.Fatal(app.Listen(":3000"))
 
 }
