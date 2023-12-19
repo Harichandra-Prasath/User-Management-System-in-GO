@@ -3,23 +3,46 @@ package userHandlers
 import (
 	"github.com/Harichandra-Prasath/User-Management-System-in-GO/database"
 	"github.com/Harichandra-Prasath/User-Management-System-in-GO/internal/model"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
-func Register(c *fiber.Ctx) error {
+func Signup(c *fiber.Ctx) error {
 	db := database.DB
-	user := new(model.User)
+	payload := new(model.Register)
 
-	err := c.BodyParser(user)
+	err := c.BodyParser(payload)
 	if err != nil {
-		return c.Status(500).JSON(fiber.Map{"status": "error",
+		return c.Status(fiber.ErrBadRequest.Code).JSON(fiber.Map{"status": "error",
 			"message": "Invalid Input.. Review your request body",
 			"data":    err})
 	}
-	user.ID = uuid.New()
+	errors := model.ValidateStruct(payload)
+	if errors != nil {
+		return c.Status(fiber.ErrBadRequest.Code).JSON(fiber.Map{"status": "error",
+			"message": "Invalid Input.. Review your request body",
+			"data":    errors})
+	}
+	if payload.Password != payload.PasswordConfirm {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "message": "Passwords do not match"})
 
-	err = db.Create(&user).Error
+	}
+	hashbytes, err := bcrypt.GenerateFromPassword([]byte(payload.Password), 14)
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{"staus": "error", "message": "Internal Server error"})
+	}
+	payload.Password = string(hashbytes)
+	newuser := model.User{
+		ID:        uuid.New(),
+		UserName:  payload.Username,
+		Email:     payload.Email,
+		Password:  string(hashbytes),
+		FirstName: payload.FirstName,
+	}
+
+	err = db.Create(&newuser).Error
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{"status": "error",
 			"message": "Cant register the user",
@@ -29,7 +52,7 @@ func Register(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"status":  "success",
 		"message": "User successfully registered",
-		"data":    user})
+		"data":    newuser})
 }
 
 func Dashboard(c *fiber.Ctx) error {

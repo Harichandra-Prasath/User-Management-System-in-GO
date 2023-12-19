@@ -8,6 +8,6 @@ import (
 func SetUserRoutes(router fiber.Router) {
 	user := router.Group("/users")
 	user.Get("/dashboard", userHandlers.Dashboard)
-	user.Post("/register", userHandlers.Register)
+	user.Post("/signup", userHandlers.Signup)
 	//user.Post("/login")
 }
