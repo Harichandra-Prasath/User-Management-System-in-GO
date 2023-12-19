@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/Harichandra-Prasath/User-Management-System-in-GO/config"
+	"github.com/Harichandra-Prasath/User-Management-System-in-GO/internal/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -32,5 +33,6 @@ func Connect() {
 		panic("failed to connect Database")
 
 	}
+	DB.AutoMigrate(&model.User{})
 	fmt.Println("Connection Established")
 }
