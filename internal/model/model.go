@@ -29,6 +29,14 @@ type Register struct {
 	PasswordConfirm string `json:"passwordconfirm" validate:"required,min=8"`
 }
 
+type Userview struct {
+	Id        uuid.UUID
+	Username  string
+	Firstname string
+	Lastname  string
+	Email     string
+}
+
 var validate = validator.New()
 
 type ErrorResponse struct {

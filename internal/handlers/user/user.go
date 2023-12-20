@@ -61,8 +61,20 @@ func Signup(c *fiber.Ctx) error {
 func Dashboard(c *fiber.Ctx) error {
 	db := database.DB
 	var users []model.User
+	var userviews []*model.Userview
 
 	db.Find(&users)
+
+	for _, user := range users {
+		var userview model.Userview
+		userview.Id = user.ID
+		userview.Username = user.UserName
+		userview.Firstname = user.FirstName
+		userview.Lastname = user.LastName
+		userview.Email = user.Email
+
+		userviews = append(userviews, &userview)
+	}
 
 	if len(users) == 0 {
 		return c.Status(404).JSON(fiber.Map{
@@ -71,7 +83,7 @@ func Dashboard(c *fiber.Ctx) error {
 			"data":    nil})
 	}
 
-	return c.JSON(fiber.Map{"status": "success", "message": "users found", "data": users})
+	return c.JSON(fiber.Map{"status": "success", "message": "users found", "data": userviews})
 }
 
 func Login(c *fiber.Ctx) error {
@@ -122,9 +134,8 @@ func Login(c *fiber.Ctx) error {
 		Value:    tokenstring,
 		Path:     "/",
 		MaxAge:   60 * 60,
-		Secure:   false,
 		HTTPOnly: true,
-		Domain:   "localhost",
+		Secure:   false,
 	})
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
