@@ -1,3 +1,4 @@
+github.com/gofiber/fiber/v2
 github.com/cespare/reflex@latest
 github.com/joho/godotenv
 gorm.io/gorm
@@ -5,3 +6,4 @@ gorm.io/driver/postgres
 github.com/google/uuid
 github.com/golang-jwt/jwtgo
 github.com/go-playground/validator/v10
+golang.org/x/crypto/bcrypt

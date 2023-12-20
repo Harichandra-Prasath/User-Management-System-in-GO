@@ -61,25 +61,25 @@ The project is organized with the following directory structure:
 
 Current available routes are grouped with /api/users
 
-# 1. Dashboard
+### 1. Dashboard
 
 - **Path:** `/dashboard`
 - **Method:** `GET`
 - **Authorization:** Requires a valid JWT token.
 
-# 2. Login
+### 2. Login
 
 - **Path:** `/login`
 - **Methods:** `POST` (Login)
 - **Authorization:** None
 
-# 3. Signup
+### 3. Signup
 
 - **Path:** `/signup`
 - **Method:** `POST`
 - **Authorization:** None
 
-# 4. Logout
+### 4. Logout
 
 - **Path:** `/logout`
 - **Method:** `GET`
