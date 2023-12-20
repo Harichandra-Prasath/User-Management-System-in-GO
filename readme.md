@@ -8,9 +8,8 @@ This project is a User Management System built using Fiber as the web framework.
 2. [Project Structure](#project-structure)
 3. [Routes](#routes)
 4. [Middleware](#middleware)
-5. [Authentication](#authentication)
-6. [Database](#database)
-7. [Dependencies](#dependencies)
+5. [Database](#database)
+6. [Dependencies](#dependencies)
 
 ## Installation
 
@@ -40,7 +39,7 @@ make watch
 
 Reflex is integrated to watch the changes and restart
 
-# Project Structure
+## Project Structure
 
 The project is organized with the following directory structure:
 
@@ -58,4 +57,53 @@ The project is organized with the following directory structure:
 
 - **Config/:** Environmental Variables Configration
 
+## Routes
 
+Current available routes are grouped with /api/users
+
+# 1. Dashboard
+
+- **Path:** `/dashboard`
+- **Method:** `GET`
+- **Authorization:** Requires a valid JWT token.
+
+# 2. Login
+
+- **Path:** `/login`
+- **Methods:** `POST` (Login)
+- **Authorization:** None
+
+# 3. Signup
+
+- **Path:** `/signup`
+- **Method:** `POST`
+- **Authorization:** None
+
+# 4. Logout
+
+- **Path:** `/logout`
+- **Method:** `GET`
+- **Authorization:** Requires a valid JWT token.
+
+## MiddleWare
+
+Custom middleware is implemented for JWT authorization. This middleware validates incoming requests for protected routes and ensures the presence of a valid JWT token.For clients that cant send cookies, sending requests with following header: AUTHORIZATION Bearer $token will work
+
+## Database
+
+PostgreSQL is used as the database, and Gorm serves as the ORM. SQL scripts for setting up the database can be found in the database folder.
+
+
+## Dependencies
+
+- **[github.com/gofiber/fiber/v2:](https://github.com/gofiber/fiber/v2)** Web framework.
+
+- **[golang.org/x/crypto/bcrypt:](https://pkg.go.dev/golang.org/x/crypto/bcrypt)** Password hashing.
+
+- **[github.com/go-playground/validator/v10:](https://github.com/go-playground/validator)** Input validation.
+
+- **[gorm.io/gorm:](https://gorm.io/gorm)** Object-Relational Mapping for database operations.
+
+For a complete list of dependencies and versions, refer to the `requirements.txt` file.
+
+Feel free to explore and contribute to this User Management System!
