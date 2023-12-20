@@ -9,5 +9,5 @@ func SetUserRoutes(router fiber.Router) {
 	user := router.Group("/users")
 	user.Get("/dashboard", userHandlers.Dashboard)
 	user.Post("/signup", userHandlers.Signup)
-	user.Post("/signin", userHandlers.Signin)
+	user.Post("/login", userHandlers.Login)
 }

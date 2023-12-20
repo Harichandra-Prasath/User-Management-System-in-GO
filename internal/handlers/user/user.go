@@ -74,7 +74,7 @@ func Dashboard(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{"status": "success", "message": "users found", "data": users})
 }
 
-func Signin(c *fiber.Ctx) error {
+func Login(c *fiber.Ctx) error {
 	db := database.DB
 	payload := new(model.Login)
 
@@ -130,5 +130,19 @@ func Signin(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"status": "success",
 		"token":  tokenstring})
+
+}
+
+func Logout(c *fiber.Ctx) error {
+	expired := time.Now().Add(-time.Hour * 24)
+	c.Cookie(&fiber.Cookie{
+		Name:    "token",
+		Value:   "",
+		Expires: expired,
+	})
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"status":  "success",
+		"message": "logged out successfully"})
 
 }
