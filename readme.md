@@ -104,6 +104,6 @@ PostgreSQL is used as the database, and Gorm serves as the ORM. SQL scripts for 
 
 - **[gorm.io/gorm:](https://gorm.io/gorm)** Object-Relational Mapping for database operations.
 
-For a complete list of dependencies and versions, refer to the `requirements.txt` file.
+For a complete list of dependencies and versions, refer to the `requirements.txt` file or simply run go mod download.
 
 Feel free to explore and contribute to this User Management System!
